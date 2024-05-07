@@ -1,10 +1,13 @@
+# Renderのサービスで動作させるため、Python 3.7.10で動作させるコードに修正させる。
+# 以下の処理はコメントアウトする
+# img = image.load_img(filepath, color_mode="grayscale", target_size=(image_size,image_size)) # Python 3.7.10で動作するようにコード修正
 import os
 import tensorflow as tf
 from flask import Flask, request, redirect, render_template, flash
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.preprocessing import image
-from keras.preprocessing.image import load_img
+# from keras.preprocessing.image import load_img # Python 3.7.10で動作するようにコード修正
 
 
 import numpy as np
@@ -43,7 +46,8 @@ def upload_file():
             filepath = os.path.join(UPLOAD_FOLDER, filename)
 
             #受け取った画像を読み込み、np形式に変換
-            img = image.load_img(filepath, color_mode="grayscale", target_size=(image_size,image_size))
+            # img = image.load_img(filepath, color_mode="grayscale", target_size=(image_size,image_size)) # Python 3.7.10で動作するようにコード修正
+            img = image.load_img(filepath, grayscale=True, target_size=(image_size,image_size))
             img = image.img_to_array(img)
             data = np.array([img])
             #変換したデータをモデルに渡して予測する
